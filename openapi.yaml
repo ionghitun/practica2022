@@ -1,0 +1,70 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Practica API
+  description: Documentation for practica API
+
+servers:
+  - url: http://practica.local/api
+
+# Basic authentication
+components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []
+
+paths:
+  /categories:
+    get:
+      description: Returns a list of categories 
+      parameters:
+        - name: limit
+          in: query
+          description: Limits the number of items on a page
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          description: Specifies the page number of the artists to be displayed
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully returned a list of categories
+        '400':
+          description: Invalid request
+  
+  /category:
+    #  ----- Added lines  ----------------------------------------
+    post:
+      description: Lets a user create a new category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object 
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                parent_id:
+                  type: integer
+
+      responses:
+        '200':
+          description: Successfully created a new category
+
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
