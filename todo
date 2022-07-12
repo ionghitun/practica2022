@@ -1,3 +1,23 @@
+Tema 1:
+
 - register
 - algoritm/metoda pentru a lua categoriile sub forma unui tree
-- de terminat toate metodele din category (getAll, update, get, delete)
+- de terminat toate metodele din category controller (getAll, update, get, delete)
+
+Tema 2:
+
+- users must verify email on register
+- forgot password
+- openapi swagger update documentation
+- de terminat toate metodele din product controller (add, update, get, delete)
+
+
+
+Comenzi utile:
+
+php artisan storage:link  -> generate symlink for storage files
+php artisan migrate:fresh --seed   -> recreate tables and seed data
+composer install   -> install vendor dependencies
+php artisan make:model Product --migration   -> create a new model and associated migration
+php artisan make:controller   -> create new controller
+php artisan     -> see list of all available commands

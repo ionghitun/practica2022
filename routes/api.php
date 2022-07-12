@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/login', [UserController::class, 'login']);
+Route::post('/register', [UserController::class, 'register']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', function (Request $request) {
@@ -28,4 +30,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/category/{id}', [CategoryController::class, 'get']);
     Route::put('/category/{id}', [CategoryController::class, 'update']);
     Route::delete('/category/{id}', [CategoryController::class, 'delete']);
+    Route::get('categories-tree', [CategoryController::class, 'tree']);
+
+    Route::get('/products', [ProductController::class, 'getAll']);
+
+
+    //To know how to upload images and Test routes
+    Route::post('/upload', [ProductController::class, 'upload']);
+    Route::get('/products/{categoryId}', [ProductController::class, 'getAllProductsForCategory']);
 });
