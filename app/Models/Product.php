@@ -32,6 +32,18 @@ class Product extends Model
     ];
 
     /**
+     * @var string[]
+     */
+    protected $fillable = [
+        'name',
+        'category_id',
+        'description',
+        'quantity',
+        'price',
+        'status'
+    ];
+
+    /**
      * @return BelongsTo
      */
     public function category(): BelongsTo

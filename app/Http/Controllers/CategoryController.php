@@ -82,7 +82,7 @@ class CategoryController extends ApiController
             $category->parent_id = $parentId;
             $category->save();
 
-            return $this->sendResponse([], Response::HTTP_CREATED);
+            return $this->sendResponse($category->toArray(), Response::HTTP_CREATED);
         } catch (Exception $exception) {
             Log::error($exception);
 

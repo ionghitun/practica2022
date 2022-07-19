@@ -19,11 +19,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
+Route::post('/verify-email', [UserController::class, 'verifyEmail']);
+Route::post('/resend-verify-email', [UserController::class, 'resendVerifyEmail']);
+Route::post('/forgot-password', [UserController::class, 'forgotPassword']);
+Route::post('/change-password', [UserController::class, 'changePassword']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+    Route::get('/user', [UserController::class, 'getUser']);
+    Route::post('/user', [UserController::class, 'updateUser']);
 
     Route::get('/categories', [CategoryController::class, 'getAll']);
     Route::post('/category', [CategoryController::class, 'add']);
@@ -33,9 +36,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('categories-tree', [CategoryController::class, 'tree']);
 
     Route::get('/products', [ProductController::class, 'getAll']);
-
-
-    //To know how to upload images and Test routes
-    Route::post('/upload', [ProductController::class, 'upload']);
     Route::get('/products/{categoryId}', [ProductController::class, 'getAllProductsForCategory']);
+    Route::post('/product', [ProductController::class, 'add']);
+    Route::get('/product/{id}', [ProductController::class, 'get']);
+    Route::put('/product/{id}', [ProductController::class, 'update']);
+    Route::post('/product/{id}/image', [ProductController::class, 'updateImage']);
+    Route::delete('/product/{id}', [ProductController::class, 'delete']);
 });
