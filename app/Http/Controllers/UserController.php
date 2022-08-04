@@ -312,4 +312,22 @@ class UserController extends ApiController
             return $this->sendError('Something went wrong, please contact administrator!', [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * @return JsonResponse
+     */
+    public function getUser(): JsonResponse
+    {
+        try {
+            $user = Auth::user();
+
+            return $this->sendResponse([
+                'user' => $user->toArray()
+            ]);
+        } catch (Exception $exception) {
+            Log::error($exception);
+
+            return $this->sendError('Something went wrong, please contact administrator!', [], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
