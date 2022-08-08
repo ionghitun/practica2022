@@ -51,6 +51,27 @@ class CategoryController extends ApiController
     }
 
     /**
+     * @param $id
+     * @return JsonResponse
+     */
+    public function get($id): JsonResponse
+    {
+        try {
+            $category = Category::find($id);
+
+            if (!$category) {
+                return $this->sendError('Category not found!', [], Response::HTTP_NOT_FOUND);
+            }
+
+            return $this->sendResponse($category->toArray());
+        } catch (Exception $exception) {
+            Log::error($exception);
+
+            return $this->sendError('Something went wrong, please contact administrator!', [], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
      * @param Request $request
      * @return JsonResponse
      */
@@ -83,27 +104,6 @@ class CategoryController extends ApiController
             $category->save();
 
             return $this->sendResponse($category->toArray(), Response::HTTP_CREATED);
-        } catch (Exception $exception) {
-            Log::error($exception);
-
-            return $this->sendError('Something went wrong, please contact administrator!', [], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    /**
-     * @param $id
-     * @return JsonResponse
-     */
-    public function get($id): JsonResponse
-    {
-        try {
-            $category = Category::find($id);
-
-            if (!$category) {
-                return $this->sendError('Category not found!', [], Response::HTTP_NOT_FOUND);
-            }
-
-            return $this->sendResponse($category->toArray());
         } catch (Exception $exception) {
             Log::error($exception);
 

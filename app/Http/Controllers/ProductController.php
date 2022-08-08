@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Product;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -68,6 +67,27 @@ class ProductController extends ApiController
     }
 
     /**
+     * @param $id
+     * @return JsonResponse
+     */
+    public function get($id): JsonResponse
+    {
+        try {
+            $product = Product::find($id);
+
+            if (!$product) {
+                return $this->sendError('Product not found!', [], Response::HTTP_NOT_FOUND);
+            }
+
+            return $this->sendResponse($product->toArray());
+        } catch (Exception $exception) {
+            Log::error($exception);
+
+            return $this->sendError('Something went wrong, please contact administrator!', [], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
      * @param Request $request
      * @return JsonResponse
      */
@@ -110,27 +130,6 @@ class ProductController extends ApiController
             $product->save();
 
             return $this->sendResponse($product->toArray(), Response::HTTP_CREATED);
-        } catch (Exception $exception) {
-            Log::error($exception);
-
-            return $this->sendError('Something went wrong, please contact administrator!', [], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    /**
-     * @param $id
-     * @return JsonResponse
-     */
-    public function get($id): JsonResponse
-    {
-        try {
-            $product = Product::find($id);
-
-            if (!$product) {
-                return $this->sendError('Product not found!', [], Response::HTTP_NOT_FOUND);
-            }
-
-            return $this->sendResponse($product->toArray());
         } catch (Exception $exception) {
             Log::error($exception);
 

@@ -17,7 +17,7 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'Category ' . strtoupper(fake()->randomLetter()) . fake()->randomLetter() .' '. fake()->randomNumber(1),
+            'name' => 'Category ' . strtoupper(fake()->randomLetter()) . fake()->randomLetter() . ' ' . fake()->randomNumber(1),
             'parent_id' => null
         ];
     }
